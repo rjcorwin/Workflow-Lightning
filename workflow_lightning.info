@@ -1,0 +1,7 @@
+
+name = Workflow Lightning
+description = "For administrators, move to 'draft'" and "Move to 'approved'" buttons will trigger a redirect to the next node at the "review" state.
+core = 6.x
+package = Workflow
+
+version = 6.x-1.x-dev
