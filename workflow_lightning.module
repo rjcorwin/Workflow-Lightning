@@ -1,5 +1,23 @@
 <?php
 
+
+
+function workflow_lightning_menu() {
+  $items['backgrounds/lightning-review'] = array(
+    'title' => 'Dynamic Backgrounds',
+    'description' => 'Dynamic Backgrounds',
+    'page callback' => 'workflow_lightning_entry_point',
+    'access arguments' => TRUE,
+  );
+ return $items; 
+}
+
+function workflow_lightning_entry_point() {
+  $node = workflow_lightning_next_node();
+  drupal_goto(workflow_lightning_next_node($form['node']['#value']->nid));
+
+}
+
 function workflow_lightning_form_alter(&$form, &$form_state, $form_id) {
   global $user;
   if (in_array('site administrator', array_values($user->roles)) && $form_id == 'workflow_tab_form' ) {
