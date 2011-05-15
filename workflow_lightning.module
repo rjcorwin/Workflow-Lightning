@@ -21,7 +21,10 @@ function workflow_lightning_entry_point() {
 function workflow_lightning_form_alter(&$form, &$form_state, $form_id) {
   global $user;
   if (in_array('site administrator', array_values($user->roles)) && $form_id == 'workflow_tab_form' ) {
-    $form['#redirect'] = workflow_lightning_next_node($form['node']['#value']->nid);
+    // $form['#redirect'] = workflow_lightning_next_node($form['node']['#value']->nid);
+    // Sending the user back to the entry point ensures that the node they get forwarded to is fresh and hasn't been Accetped by another
+    // Site Administrator.
+    $form['#redirect'] = "/backgrounds/lightning-review";
   }
 }
 
