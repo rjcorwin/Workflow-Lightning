@@ -3,11 +3,12 @@
 
 
 function workflow_lightning_menu() {
-  $items['backgrounds/lightning-review'] = array(
+  $items['backgrounds/review'] = array(
     'title' => 'Dynamic Backgrounds',
     'description' => 'Dynamic Backgrounds',
     'page callback' => 'workflow_lightning_entry_point',
-    'access arguments' => TRUE,
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK
   );
  return $items; 
 }
@@ -24,7 +25,7 @@ function workflow_lightning_form_alter(&$form, &$form_state, $form_id) {
     // $form['#redirect'] = workflow_lightning_next_node($form['node']['#value']->nid);
     // Sending the user back to the entry point ensures that the node they get forwarded to is fresh and hasn't been Accetped by another
     // Site Administrator.
-    $form['#redirect'] = "/backgrounds/lightning-review";
+    $form['#redirect'] = "/backgrounds/review";
   }
 }
 
@@ -32,7 +33,8 @@ function workflow_lightning_next_node($not = NULL) {
   $sql = "select nid from workflow_node where state_name='background_approvals_review' && nid != %d ORDER BY stamp ASC;";
   $node = node_load(db_result(db_query($sql, $not)));
   if (!$node) {
-    return "backgrounds/review";
+    drupal_set_message('All Backgrounds have been reviewed.');
+    return "/";
   }
   else {
     return $node->path;  
